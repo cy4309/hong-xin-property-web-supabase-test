@@ -36,6 +36,18 @@
 
 ---
 
+## 步驟 2.6：文章瀏覽量統計（可選）
+
+若要啟用瀏覽量統計，請執行 `scripts/supabase-news-views.sql`：
+
+1. SQL Editor → New query
+2. 複製 `supabase-news-views.sql` 內容貼上
+3. 點 **Run** 執行
+
+會建立 `view_count` 欄位與 `increment_news_view` RPC，文章詳情頁載入時會自動 +1。
+
+---
+
 ## 步驟三：取得 API 金鑰
 
 1. 左側選單點 **Project Settings**（齒輪圖示）

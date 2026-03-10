@@ -10,6 +10,7 @@ export type NewsItem = {
   date: string;
   seoTitle: string;
   seoDesc: string;
+  view_count?: number;
 };
 
 /** Supabase 無資料時的開發用假資料 */
@@ -76,6 +77,28 @@ export async function searchNews(query: string): Promise<NewsItem[]> {
   } catch (err) {
     console.error("[searchNews] Error:", err);
     return [];
+  }
+}
+
+/**
+ * 文章瀏覽量 +1（RPC）
+ * 由文章詳情頁在 client 端呼叫，回傳更新後的瀏覽數。
+ */
+export async function incrementNewsView(slug: string): Promise<number | null> {
+  const supabase = getSupabase();
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase.rpc("increment_news_view", {
+      article_slug: slug,
+    });
+    if (error) {
+      console.error("[incrementNewsView] Supabase error:", error.message);
+      return null;
+    }
+    return typeof data === "number" ? data : null;
+  } catch (err) {
+    console.error("[incrementNewsView] Error:", err);
+    return null;
   }
 }
 

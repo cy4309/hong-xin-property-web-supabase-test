@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getNewsBySlug } from "@/lib/sheet";
 import { generatePageMetadata } from "@/lib/seo";
 import { FaArrowLeft } from "react-icons/fa";
+import ViewCounter from "@/components/news/ViewCounter";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -39,7 +40,10 @@ export default async function NewsSlugPage({ params }: Props) {
         </Link>
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-deep mb-4">{item.title}</h1>
-          <time className="text-neutral-500 text-sm">{item.date}</time>
+          <div className="flex flex-wrap items-center gap-4 text-neutral-500">
+            <time className="text-sm">{item.date}</time>
+            <ViewCounter slug={item.slug} initialCount={item.view_count ?? 0} />
+          </div>
         </header>
         {item.cover && (
           <div className="aspect-video rounded-2xl overflow-hidden mb-8">
