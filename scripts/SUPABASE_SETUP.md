@@ -48,6 +48,22 @@
 
 ---
 
+## 步驟 2.7：圖片存儲（可選）
+
+若要使用 Supabase Storage 存放新聞封面圖，請執行 `scripts/supabase-storage-news-covers.sql`：
+
+1. SQL Editor → New query
+2. 複製 `supabase-storage-news-covers.sql` 內容貼上
+3. 點 **Run** 執行
+
+會建立 `news-covers` 公開 bucket。上傳方式：
+- **API**：`POST /api/upload/news-cover`，需設定 `SUPABASE_SERVICE_ROLE_KEY`
+- **手動**：Supabase Dashboard → Storage → news-covers → Upload
+
+上傳後將回傳的 URL 填入 news 表的 `cover` 欄位。
+
+---
+
 ## 步驟三：取得 API 金鑰
 
 1. 左側選單點 **Project Settings**（齒輪圖示）
@@ -65,6 +81,10 @@
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://你的專案ID.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=你的anon金鑰
+
+# 圖片上傳 API（從 Project Settings → API → service_role 取得）
+# SUPABASE_SERVICE_ROLE_KEY=你的service_role金鑰
+# UPLOAD_API_KEY=自訂金鑰  # 若設定，上傳時需在 Header 帶 Authorization: Bearer {金鑰}
 ```
 
 > 舊的 `NEXT_PUBLIC_SHEET_API` 可刪除，已不再使用。

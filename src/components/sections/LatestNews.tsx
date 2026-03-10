@@ -3,6 +3,7 @@ import SectionTitle from "@/components/ui/SectionTitle";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import type { NewsItem } from "@/lib/sheet";
+import NewsCoverImage from "@/components/ui/NewsCoverImage";
 
 type LatestNewsProps = {
   items: NewsItem[];
@@ -19,10 +20,11 @@ export default function LatestNews({ items }: LatestNewsProps) {
               <Card>
                 <div className="aspect-video bg-neutral-100 overflow-hidden">
                   {item.cover ? (
-                    <img
+                    <NewsCoverImage
                       src={item.cover}
                       alt={item.title}
                       className="w-full h-full object-cover"
+                      priority
                     />
                   ) : null}
                 </div>

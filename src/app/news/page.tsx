@@ -5,6 +5,7 @@ import { generatePageMetadata } from "@/lib/seo";
 import SectionTitle from "@/components/ui/SectionTitle";
 import Card from "@/components/ui/Card";
 import NewsSearchForm from "@/components/news/NewsSearchForm";
+import NewsCoverImage from "@/components/ui/NewsCoverImage";
 
 export const metadata = generatePageMetadata({
   title: "最新消息",
@@ -30,15 +31,16 @@ export default async function NewsPage({ searchParams }: Props) {
           <NewsSearchForm />
         </Suspense>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <Link key={item.id} href={`/news/${item.slug}`}>
               <Card>
-                <div className="aspect-video bg-neutral-100">
+                <div className="aspect-video bg-neutral-100 overflow-hidden">
                   {item.cover && (
-                    <img
+                    <NewsCoverImage
                       src={item.cover}
                       alt={item.title}
                       className="w-full h-full object-cover"
+                      priority={index < 6}
                     />
                   )}
                 </div>

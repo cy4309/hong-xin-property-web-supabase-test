@@ -4,6 +4,7 @@ import { getNewsBySlug } from "@/lib/sheet";
 import { generatePageMetadata } from "@/lib/seo";
 import { FaArrowLeft } from "react-icons/fa";
 import ViewCounter from "@/components/news/ViewCounter";
+import NewsCoverImage from "@/components/ui/NewsCoverImage";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -46,12 +47,8 @@ export default async function NewsSlugPage({ params }: Props) {
           </div>
         </header>
         {item.cover && (
-          <div className="aspect-video rounded-2xl overflow-hidden mb-8">
-            <img
-              src={item.cover}
-              alt={item.title}
-              className="w-full h-full object-cover"
-            />
+          <div className="aspect-video rounded-2xl overflow-hidden mb-8 relative">
+            <NewsCoverImage src={item.cover} alt={item.title} priority />
           </div>
         )}
         <div className="text-neutral-600 leading-relaxed whitespace-pre-wrap">
