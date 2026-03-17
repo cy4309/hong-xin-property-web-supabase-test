@@ -85,6 +85,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=你的anon金鑰
 # 圖片上傳 API（從 Project Settings → API → service_role 取得）
 # SUPABASE_SERVICE_ROLE_KEY=你的service_role金鑰
 # UPLOAD_API_KEY=自訂金鑰  # 若設定，上傳時需在 Header 帶 Authorization: Bearer {金鑰}
+# CRON_SECRET=自訂金鑰  # Vercel Cron 保活用，需在 Vercel 專案設定
 ```
 
 > 舊的 `NEXT_PUBLIC_SHEET_API` 可刪除，已不再使用。
@@ -126,6 +127,18 @@ VALUES (
 3. 點擊任一則新聞，確認詳情頁可正常開啟
 
 若未設定 Supabase 環境變數，會自動使用內建假資料，方便本地開發。
+
+---
+
+## Supabase 保活（Vercel Cron）
+
+Supabase 免費方案在專案未活躍一段時間後會暫停。若部署於 Vercel，可透過 Cron 每 3 天發送一次請求維持活躍：
+
+1. 在 Vercel 專案設定 **Environment Variables** 新增 `CRON_SECRET`（自訂隨機字串，至少 16 字元）
+2. 專案已包含 `vercel.json` 與 `/api/cron/keep-alive`，部署後會自動執行
+3. 排程：`0 0 */3 * *`（每月 1、4、7… 日 00:00 UTC）
+
+> Vercel 呼叫時會自動帶 `Authorization: Bearer {CRON_SECRET}`，未設定時則不驗證。
 
 ---
 
