@@ -132,11 +132,11 @@ VALUES (
 
 ## Supabase 保活（Vercel Cron）
 
-Supabase 免費方案在專案未活躍一段時間後會暫停。若部署於 Vercel，可透過 Cron 每 3 天發送一次請求維持活躍：
+Supabase 免費方案在專案未活躍一段時間後會暫停。若部署於 Vercel，可透過 Cron **每天至少一次** 對 `news` 表做實際 SELECT 以維持活躍：
 
 1. 在 Vercel 專案設定 **Environment Variables** 新增 `CRON_SECRET`（自訂隨機字串，至少 16 字元）
 2. 專案已包含 `vercel.json` 與 `/api/cron/keep-alive`，部署後會自動執行
-3. 排程：`0 0 */3 * *`（每月 1、4、7… 日 00:00 UTC）
+3. 排程：`0 0 * * *`（每日 00:00 UTC）
 
 > Vercel 呼叫時會自動帶 `Authorization: Bearer {CRON_SECRET}`，未設定時則不驗證。
 
